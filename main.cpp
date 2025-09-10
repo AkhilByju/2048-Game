@@ -50,15 +50,15 @@ int introduction()
         cout << "Enter board size (e.g., 4 for 4x4, or 0 to quit): ";
         cin >> chosenSize;
 
-        if (cin.fail()) // user entered something that isn’t a number
+        if (cin.fail())
         {
-            cin.clear(); // clear error state
+            cin.clear();
             string input;
-            cin >> input; // read what they actually typed
+            cin >> input;
             if (input == "Q" || input == "q")
             {
                 cout << "Exiting game. Goodbye!" << endl;
-                exit(0); // quit program safely
+                exit(0);
             }
             else
             {
@@ -69,7 +69,7 @@ int introduction()
 
         if (chosenSize >= 2)
         {
-            return chosenSize; // valid size
+            return chosenSize;
         }
         else
         {
