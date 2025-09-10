@@ -31,8 +31,9 @@ void transposeBoard()
     }
 }
 
-void introduction()
+int introduction()
 {
+    system("clear");
     cout << "=============================" << endl;
     cout << "        2048 Game           " << endl;
     cout << "=============================" << endl;
@@ -42,6 +43,39 @@ void introduction()
     cout << "Press R to restart the game." << endl;
     cout << "=============================" << endl;
     cout << endl;
+
+    int chosenSize;
+    while (true)
+    {
+        cout << "Enter board size (e.g., 4 for 4x4, or 0 to quit): ";
+        cin >> chosenSize;
+
+        if (cin.fail()) // user entered something that isn’t a number
+        {
+            cin.clear(); // clear error state
+            string input;
+            cin >> input; // read what they actually typed
+            if (input == "Q" || input == "q")
+            {
+                cout << "Exiting game. Goodbye!" << endl;
+                exit(0); // quit program safely
+            }
+            else
+            {
+                cout << "Invalid input! Please enter a number or Q to quit." << endl;
+                continue;
+            }
+        }
+
+        if (chosenSize >= 2)
+        {
+            return chosenSize; // valid size
+        }
+        else
+        {
+            cout << "Invalid size! Please enter 2 or greater." << endl;
+        }
+    }
 }
 
 // Main Game Functions
@@ -242,17 +276,7 @@ int main()
 {
     srand(time(0));
 
-    introduction();
-
-    int chosenSize;
-    cout << "Enter board size (e.g., 4 for 4x4): ";
-    cin >> chosenSize;
-    while (chosenSize < 2)
-    {
-        cout << "Invalid size! Please enter a size of 2 or greater: ";
-        cin >> chosenSize;
-    }
-
+    int chosenSize = introduction();
     initializeBoard(chosenSize);
 
     char move;
@@ -278,7 +302,7 @@ int main()
             if (toupper(move) == 'R')
             {
                 score = 0;
-                introduction();
+                chosenSize = introduction();
                 initializeBoard(chosenSize);
                 continue;
             }
@@ -306,7 +330,7 @@ int main()
         else if (toupper(move) == 'R')
         {
             score = 0;
-            introduction();
+            chosenSize = introduction();
             initializeBoard(chosenSize);
             continue;
         }
