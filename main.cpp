@@ -7,6 +7,7 @@
 using namespace std;
 
 const int SIZE = 4;
+int score = 0;
 int board[SIZE][SIZE];
 
 // Helper Functions
@@ -57,6 +58,7 @@ void initializeBoard()
 
 void printBoard()
 {
+    cout << "Score: " << score << endl;
     for (int i = 0; i < SIZE; i++)
         std::cout << "+-----";
     std::cout << "+" << std::endl;
@@ -136,6 +138,7 @@ bool moveLeft()
             if (newRow[col] != 0 && newRow[col] == newRow[col + 1])
             {
                 newRow[col] *= 2;
+                score += newRow[col];
                 newRow[col + 1] = 0;
                 moved = true;
             }
@@ -230,7 +233,7 @@ int main()
             break;
         }
 
-        cout << "Move (W/A/S/D): " << endl;
+        cout << "Move (W/A/S/D): ";
         cin >> move;
 
         bool moved = false;
