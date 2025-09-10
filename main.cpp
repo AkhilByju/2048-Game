@@ -6,10 +6,10 @@
 
 using namespace std;
 
-const int SIZE = 4;
+int SIZE;
 int score = 0;
 int highScore = 0;
-int board[SIZE][SIZE];
+vector<vector<int>> board;
 
 // Helper Functions
 void reverseRow(int row)
@@ -32,8 +32,11 @@ void transposeBoard()
 }
 
 // Main Game Functions
-void initializeBoard()
+void initializeBoard(int size)
 {
+
+    SIZE = size;
+    board.assign(SIZE, vector<int>(SIZE, 0));
     // set everything to zero
     for (int i = 0; i < SIZE; i++)
     {
@@ -225,7 +228,19 @@ bool canMove()
 int main()
 {
     srand(time(0));
-    initializeBoard();
+
+    int chosenSize;
+    cout << "Enter board size (e.g., 4 for 4x4):";
+    cin >> chosenSize;
+    if (chosenSize < 2)
+    {
+        do
+        {
+            cout << "Invalid size! Please enter a size of 2 or greater: ";
+            cin >> chosenSize;
+        } while (chosenSize < 2);
+    }
+    initializeBoard(chosenSize);
 
     char move;
     while (true)
@@ -245,7 +260,7 @@ int main()
             if (toupper(move) == 'R')
             {
                 score = 0;
-                initializeBoard();
+                initializeBoard(chosenSize);
                 continue;
             }
             else if (toupper(move) == 'Q')
