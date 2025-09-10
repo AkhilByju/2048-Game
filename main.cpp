@@ -31,6 +31,19 @@ void transposeBoard()
     }
 }
 
+void introduction()
+{
+    cout << "=============================" << endl;
+    cout << "        2048 Game           " << endl;
+    cout << "=============================" << endl;
+    cout << "Use W (Up), A (Left), S (Down), D (Right) to move tiles." << endl;
+    cout << "Combine tiles with the same number to reach 2048!" << endl;
+    cout << "Press Q to quit the game." << endl;
+    cout << "Press R to restart the game." << endl;
+    cout << "=============================" << endl;
+    cout << endl;
+}
+
 // Main Game Functions
 void initializeBoard(int size)
 {
@@ -229,53 +242,74 @@ int main()
 {
     srand(time(0));
 
+    introduction();
+
     int chosenSize;
-    cout << "Enter board size (e.g., 4 for 4x4):";
+    cout << "Enter board size (e.g., 4 for 4x4): ";
     cin >> chosenSize;
-    if (chosenSize < 2)
+    while (chosenSize < 2)
     {
-        do
-        {
-            cout << "Invalid size! Please enter a size of 2 or greater: ";
-            cin >> chosenSize;
-        } while (chosenSize < 2);
+        cout << "Invalid size! Please enter a size of 2 or greater: ";
+        cin >> chosenSize;
     }
+
     initializeBoard(chosenSize);
 
     char move;
     while (true)
     {
         printBoard();
+
+        // Game over check
         if (!canMove())
         {
             cout << "Game Over!" << endl;
             cout << "Final Score: " << score << endl;
+
             if (score > highScore)
             {
                 highScore = score;
                 cout << "New High Score: " << highScore << endl;
             }
+
             cout << "Press R to Restart or Q to Quit: ";
             cin >> move;
+
             if (toupper(move) == 'R')
             {
                 score = 0;
+                introduction();
                 initializeBoard(chosenSize);
                 continue;
             }
             else if (toupper(move) == 'Q')
             {
+                cout << "Thanks for playing!" << endl;
                 break;
             }
             else
             {
-                cout << "Invalid input! Exiting game." << endl;
-                break;
+                cout << "Invalid input!" << endl;
+                continue;
             }
         }
 
-        cout << "Move (W/A/S/D): ";
+        // Normal move
+        cout << "Move (W/A/S/D, Q=Quit, R=Restart): ";
         cin >> move;
+
+        if (toupper(move) == 'Q')
+        {
+            cout << "Thanks for playing!" << endl;
+            break;
+        }
+        else if (toupper(move) == 'R')
+        {
+            score = 0;
+            introduction();
+            initializeBoard(chosenSize);
+            continue;
+        }
 
         bool moved = false;
         switch (toupper(move))
@@ -300,5 +334,6 @@ int main()
         if (moved)
             addRandomTile();
     }
+
     return 0;
 }
