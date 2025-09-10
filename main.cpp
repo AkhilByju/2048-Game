@@ -8,6 +8,7 @@ using namespace std;
 
 const int SIZE = 4;
 int score = 0;
+int highScore = 0;
 int board[SIZE][SIZE];
 
 // Helper Functions
@@ -58,7 +59,10 @@ void initializeBoard()
 
 void printBoard()
 {
-    cout << "Score: " << score << endl;
+    system("clear");
+    std::
+            cout
+        << "Score: " << score << "  High Score: " << highScore << endl;
     for (int i = 0; i < SIZE; i++)
         std::cout << "+-----";
     std::cout << "+" << std::endl;
@@ -230,7 +234,29 @@ int main()
         if (!canMove())
         {
             cout << "Game Over!" << endl;
-            break;
+            cout << "Final Score: " << score << endl;
+            if (score > highScore)
+            {
+                highScore = score;
+                cout << "New High Score: " << highScore << endl;
+            }
+            cout << "Press R to Restart or Q to Quit: ";
+            cin >> move;
+            if (toupper(move) == 'R')
+            {
+                score = 0;
+                initializeBoard();
+                continue;
+            }
+            else if (toupper(move) == 'Q')
+            {
+                break;
+            }
+            else
+            {
+                cout << "Invalid input! Exiting game." << endl;
+                break;
+            }
         }
 
         cout << "Move (W/A/S/D): ";
